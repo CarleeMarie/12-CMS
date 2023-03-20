@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/CarleeMarie/HW12/issues"
   },
-  "homepage": "https://github.com/CarleeMarie/HW12#readme"
+  "homepage": "https://github.com/CarleeMarie/HW12#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  }
 }
