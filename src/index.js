@@ -30,7 +30,7 @@ function loadMainPrompts() {
                 },
                 {
                     name: "Add a Department",
-                    value: "VIEW_DEPARTMENTS"
+                    value: "ADD_DEPARTMENT"
                 },
                 {
                     name: "Add a Role",
@@ -42,7 +42,7 @@ function loadMainPrompts() {
                 },
                 {
                     name: "Update Employee Role",
-                    value: "UPDATE_EMPLOYEE"
+                    value: "UPDATE_EMPLOYEE_ROLE"
                 },
                 {
                     name: "Quit",
@@ -50,5 +50,81 @@ function loadMainPrompts() {
                 }
             ]
         }
-    ])
+    ]).then(res => {
+        let choice = res.choice;
+        switch (choice) {
+            case "VIEW_DEPARTMENTS":
+                viewDepartments();
+                break;
+            case "VIEW_ROLES":
+                viewRoles();
+                break;
+            case "VIEW_EMPLOYEES":
+                viewEmployees();
+                break;
+            case "ADD_DEPARTMENT":
+                addDepartments();
+                break;
+            case "ADD_ROLE":
+                addRole();
+                break;
+            case "ADD_EMPLOYEE":
+                addEmployee();
+                break;
+            case "UPDATE_EMPLOYEE_ROLE":
+                updateEmployeeRole();
+                break;
+            default:
+                quit();
+
+        }
+    })
 }
+
+// Building functions for each choice
+
+// View all departments
+function viewEmployees() {
+    db.findAllEmployees()
+    .then(([rows]) => {
+        let employees = rows;
+        console.log('\n');
+        console.table 
+    })
+}
+
+// View all roles
+
+// View all employees
+function viewEmployeesByDepartment() {
+    db.findAllEmployees()
+    .then(([rows]) => {
+        let departments = rows;
+        const departmentChoices = departments.map(({ id, name }) => ({
+            name: name,
+            value: id,
+        }));
+        prompt ([
+            {
+                type: 'list',
+                name: 'departmentID',
+                message: "Which department would you like to see employees for?",
+                choices: departmentChoices
+            }
+        ])
+        .then(res => db.findAllEmployeesByDept(res.deptID))
+        .then(([rows]) => {
+            let employees = rows;
+            console.log('\n');
+        console.table(employees);
+    })
+    .then(() => loadMainPrompts());
+});
+
+// Add department
+
+// Add a role
+
+// Add an employee
+
+// Update an employee role
