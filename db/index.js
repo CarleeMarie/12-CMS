@@ -1,4 +1,5 @@
 const connection = require('./connection');
+let  = require(schema.sql);
 
 class DB {
     constructor(connection) {
@@ -17,6 +18,16 @@ class DB {
     );
   }
 
+  // create a new department
+  createDepartment(department) {
+    return this.connection.promise().query("INSERT INTO department SET ?", department);
+    
+  }
+  // create a new role
+  createEmployee(role) {
+    return this.connection.promise().query("INSERT INTO role SET ?", role);
+    
+  }
   // create a new employee
   createEmployee(employee) {
     return this.connection.promise().query("INSERT INTO employee SET ?", employee);
