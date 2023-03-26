@@ -82,49 +82,70 @@ function loadMainPrompts() {
 }
 
 // Building functions for each choice
-
-// View all departments
-function viewEmployees() {
-    db.findAllEmployees()
+// View all departments option
+function viewDepartments() {
+    db.findAllDepartments()
+    .then(([rows]) => {
+        let departments = rows;
+        console.log('\n');
+        console.table;
+    })
+}
+// View all roles option
+function viewRoles() {
+    db.findAllRoles()
+    .then(([rows]) => {
+        let roles = rows;
+        console.log('\n');
+        console.table; 
+    })
+}
+// View all employees option
+function viewEmployeesByDepartment() {
+  db.findAllEmployees()
+  .then(([rows]) => {
+    let departments = rows;
+    const departmentChoices = departments.map(({ id, name }) => ({
+        name: name,
+        value: id,
+    }));
+    prompt ([
+        {
+            type: 'list',
+            name: 'departmentID',
+            message: "Which department would you like to see employees for?",
+            choices: departmentChoices
+        }
+    ])
+    .then(res => db.findAllEmployeesByDept(res.deptID))
     .then(([rows]) => {
         let employees = rows;
         console.log('\n');
-        console.table 
-    })
-}
-
-// View all roles
-
-// View all employees
-function viewEmployeesByDepartment() {
-    db.findAllEmployees()
-    .then(([rows]) => {
-        let departments = rows;
-        const departmentChoices = departments.map(({ id, name }) => ({
-            name: name,
-            value: id,
-        }));
-        prompt ([
-            {
-                type: 'list',
-                name: 'departmentID',
-                message: "Which department would you like to see employees for?",
-                choices: departmentChoices
-            }
-        ])
-        .then(res => db.findAllEmployeesByDept(res.deptID))
-        .then(([rows]) => {
-            let employees = rows;
-            console.log('\n');
-        console.table(employees);
+    console.table(employees);
     })
     .then(() => loadMainPrompts());
 });
 
 // Add department
-
+function addDepartments() {
+    db.// TODO ()
+    .then (([rows]) => {
+        // TODO
+        console.log('\n');
+        console.table;
+    }
+    )
+}
 // Add a role
+function addRole() {
 
+}
 // Add an employee
+function addEmployee() {
+
+}
 
 // Update an employee role
+function updateEmployeeRole() {
+
+}
