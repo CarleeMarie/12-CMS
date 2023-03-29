@@ -1,5 +1,5 @@
-const connection = require('./connection');
-let  = require(schema.sql);
+const connection = require('../config/connection');
+// let  = require(schema.sql);
 
 class DB {
     constructor(connection) {
