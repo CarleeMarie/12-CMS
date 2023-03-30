@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
-// const db = require('./db');
+const connection = require('./config/connection');
+const DB = require('./db');
 require('console.table');
 
 // init();
@@ -8,7 +9,7 @@ require('console.table');
 //     loadMainPrompts();
 // }
 
-function loadMainPrompts() {
+// function loadMainPrompts() {
    inquirer.prompt([
         {
             type: 'list',
@@ -79,11 +80,13 @@ function loadMainPrompts() {
 
         }
     })
-}
+// }
 
 // Building functions for each choice
 // View all departments option
 function viewDepartments() {
+    const db = new DB(connection);
+    console.log(db);
     db.findAllDepartments()
     .then(([rows]) => {
         let departments = rows;
@@ -220,4 +223,4 @@ function addRole() {
 
 
 
-loadMainPrompts();
+// loadMainPrompts();

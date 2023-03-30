@@ -1,4 +1,4 @@
-const connection = require('../config/connection');
+
 // let  = require(schema.sql);
 
 class DB {
@@ -34,3 +34,5 @@ class DB {
     
   }
 }
+
+module.exports = DB
