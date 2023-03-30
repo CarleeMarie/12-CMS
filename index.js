@@ -56,12 +56,12 @@ function loadMainPrompts() {
         let choice = res.choice;
         switch (choice) {
             case "VIEW_DEPARTMENTS":
-                viewDepartments();
+                viewDepartments(); // finished
                 break;
             case "VIEW_ROLES":
-                viewRoles();
+                viewRoles(); // finished
                 break;
-            case "VIEW_EMPLOYEES":
+            case "VIEW_EMPLOYEES": // finished
                 viewEmployees();
                 break;
             case "ADD_DEPARTMENT":
@@ -253,7 +253,14 @@ function updateEmployeeRole() {
         .then(() => console.log("Updated employee's role."))
         .then(() => loadMainPrompts());
     });
+})
 
+}
+
+// Exit the application
+function quit() {
+    console.log("Goodbye!");
+    process.exit();
 }
 
 
