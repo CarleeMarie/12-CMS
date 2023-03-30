@@ -1,5 +1,5 @@
 
-// let  = require(schema.sql);
+let  = require(schema.sql);
 
 class DB {
     constructor(connection) {
@@ -17,6 +17,12 @@ class DB {
         employeeID
     );
   }
+  // TODO: findAllRoles() {
+  //   return this.connection.promise().query(
+  //       "SELECT id, first_name, last_name FROM employee WHERE id !=?",
+  //       employeeID
+  //   );
+  // }
 
   // create a new department
   createDepartment(department) {

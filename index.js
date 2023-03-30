@@ -1,17 +1,17 @@
 const { prompt } = require('inquirer');  //const inquirer = require('inquirer');
-const connection = require('./config/connection');
+// const connection = require('./config/connection');
 const db = require('./db');  //const DB = require('./db/src');
 const logo = require('asciiart-logo');
 require('console.table');
 
-// init();
+init();
 
-// function init() {
-//     loadMainPrompts();
-// }
+function init() {
+    loadMainPrompts();
+}
 
-// function loadMainPrompts() {
-   inquirer.prompt([
+function loadMainPrompts() {
+   prompt([
         {
             type: 'list',
             name: 'choice',
@@ -81,13 +81,11 @@ require('console.table');
 
         }
     })
-// }
+ }
 
 // Building functions for each choice
 // View all departments option
 function viewDepartments() {
-    const db = new DB(connection);
-    console.log(db);
     db.findAllDepartments()
     .then(([rows]) => {
         let departments = rows;
@@ -105,123 +103,158 @@ function viewRoles() {
     })
 }
 // View all employees option
-function viewEmployeesByDepartment() {
+function viewEmployees() {
   db.findAllEmployees()
-  .then(([rows]) => {
-    let departments = rows;
-    const departmentChoices = departments.map(({ id, name }) => ({
-        name: name,
-        value: id,
-    }));
-    prompt ([
-        {
-            type: 'list',
-            name: 'departmentID',
-            message: "Which department would you like to see employees for?",
-            choices: departmentChoices
-        }
-    ])
-    .then(res => db.findAllEmployeesByDept(res.deptID))
     .then(([rows]) => {
         let employees = rows;
         console.log('\n');
-    console.table(employees);
+        console.table(employees);
     })
+}
+// TODO: Add a department option
+function addDepartments() {
+    db.createDepartment ()
+    .then (([rows]) => {
+           
+            console.log('\n');
+            console.table;
+        }
+        )
+    }
     .then(() => loadMainPrompts());
 });
 }
 
-// Add department
-function addDepartments() {
-    db.createDepartment ()
-    .then (([rows]) => {
-        // TODO
-        console.log('\n');
-        console.table;
-    }
-    )
+
+
+function loadDeptOptions() {
+    prompt([
+        {
+            type: 'list',
+            name: 'choice',
+            message: 'What department would you like to add?',
+            input: 'name', 'string', 
+                {
+                    name: "Quit",
+                    value: "QUIT"
+                }
+            ]
+        }
+    ]).then(res => {
+        let choice = res.choice;
+
+            default:
+                quit();
+
+        }
+    })
 }
-// function loadDeptOptions() {
-//     prompt([
-//         {
-//             type: 'list',
-//             name: 'choice',
-//             message: 'What department would you like to add?',
-//             input: 'name', 'string', 
-//                 {
-//                     name: "Quit",
-//                     value: "QUIT"
-//                 }
-//             ]
-//         }
-//     ]).then(res => {
-//         let choice = res.choice;
 
-//             default:
-//                 quit();
-
-//         }
-//     })
-// }
-
-// Add a role
+// TODO: Add a role
 function addRole() {
 
 }
-// function loadRole() {
-//     prompt([
-//         {
-//             type: 'list',
-//             name: 'choice',
-//             message: 'What department role you like to add?',
-//             input: 'name', 'string', 
-//                 {
-//                     name: "Quit",
-//                     value: "QUIT"
-//                 }
-//             ]
-//         }
-//     ]).then(res => {
-//         let choice = res.choice;
+function loadRole() {
+    prompt([
+        {
+            type: 'list',
+            name: 'choice',
+            message: 'What department role you like to add?',
+            input: 'name', 'string', 
+                {
+                    name: "Quit",
+                    value: "QUIT"
+                }
+            ]
+        }
+    ]).then(res => {
+        let choice = res.choice;
 
-//             default:
-//                 quit();
+            default:
+                quit();
 
-//         }
-//     })
-// }
-// Add an employee
-// function addEmployee() {
+        }
+    })
+}
+// TODO: Add an employee
+function addEmployee() {
 
-// }
-// function loadDeptOptions() {
-//     prompt([
-//         {
-//             type: 'list',
-//             name: 'choice',
-//             message: 'What department would you like to add?',
-//             input: 'name', 'string', 
-//                 {
-//                     name: "Quit",
-//                     value: "QUIT"
-//                 }
-//             ]
-//         }
-//     ]).then(res => {
-//         let choice = res.choice;
+}
+function loadDeptOptions() {
+    prompt([
+        {
+            type: 'list',
+            name: 'choice',
+            message: 'What department would you like to add?',
+            input: 'name', 'string', 
+                {
+                    name: "Quit",
+                    value: "QUIT"
+                }
+            ]
+        }
+    ]).then(res => {
+        let choice = res.choice;
 
-//             default:
-//                 quit();
+            default:
+                quit();
 
-//         }
-//     })
-// }
+        }
+    })
+}
 
 // Update an employee role
-// function updateEmployeeRole() {
+function updateEmployeeRole() {
+    db.findAllEmployees()
+    .then(([rows]) => {
+        let employees = rows;
+        const employeeChoices = employees.map(({ id, first_name, last_name }) =>
+        ({
+            name: `${first_name} ${last_name}`,
+            value: id
+        }));
+        const roleChoices = roles.map(({ id, title }) => ({
+            name: title,
+            value: id
+        }));
+        prompt([
+            {
+                type: 'list',
+                name: 'employeeId',
+                message: "Which employee's role would you like to update?",
+                choices: employeeChoices
+            }
+        ])
+        .then(res => {
+            let employeeId = res.employeeId;
+            db.findAllRoles()
+            .then(([rows]) => {
+                let roles = rows;
+                const roleChoices = roles.map(({ id, title }) => ({
+                    name: title,
+                    value: id
+                }));
+                prompt9[
+                    {
+                        type: "list",
+                        name: "roleId",
+                        message: "Which role would you like to assign the selected employee?",
+                        choices: roleChoices
+                    }
+                ])
+                .then(res => db.updateEmployeeRole(empoyeeId, res.roleId))
+                .then(() => console.log("Updated employee's role."))
+                .then(() => loadMainPrompts());
+            });
+        })
+}
+        ])
+        .then(res => db.updateEmployeeRole(res))
+        .then(() => console.log("Updated employee's role."))
+        .then(() => loadMainPrompts());
+    });
 
-// }
+}
 
 
 
-// loadMainPrompts();
