@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const connection = require('./config/connection');
-const DB = require('./db');
+const DB = require('./db/src');
 require('console.table');
 
 // init();
