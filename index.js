@@ -1,6 +1,7 @@
-const inquirer = require('inquirer');
+const { prompt } = require('inquirer');  //const inquirer = require('inquirer');
 const connection = require('./config/connection');
-const DB = require('./db/src');
+const db = require('./db');  //const DB = require('./db/src');
+const logo = require('asciiart-logo');
 require('console.table');
 
 // init();

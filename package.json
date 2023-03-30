@@ -1,11 +1,11 @@
 {
-  "name": "hw12",
+  "name": "12-cms",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index"
   },
   "repository": {
     "type": "git",
@@ -14,14 +14,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "asciiart-logo": "^0.2.6",
+    "console.table": "^0.10.0",
+    "inquirer": "8.2.4",
+    "mysql2": "^2.1.0"
+  },
   "bugs": {
     "url": "https://github.com/CarleeMarie/HW12/issues"
   },
-  "homepage": "https://github.com/CarleeMarie/HW12#readme",
-  "dependencies": {
-    "console.table": "^0.10.0",
-    "dotenv": "^16.0.3",
-    "inquirer": "^8.2.4",
-    "mysql2": "^2.1.0"
-  }
+  "homepage": "https://github.com/CarleeMarie/HW12#readme"
 }
