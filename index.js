@@ -1,12 +1,13 @@
-const { prompt } = require('inquirer');  //const inquirer = require('inquirer');
-// const connection = require('./config/connection');
-const db = require('./db');  //const DB = require('./db/src');
+const { prompt } = require('inquirer');  
+const db = require('./db'); 
 const logo = require('asciiart-logo');
 require('console.table');
 
 init();
 
 function init() {
+    const displayLogo = logo({name: "Employee Management System"}).render();
+    console.log(displayLogo);
     loadMainPrompts();
 }
 
@@ -64,7 +65,7 @@ function loadMainPrompts() {
             case "VIEW_EMPLOYEES": // finished
                 viewEmployees();
                 break;
-            case "ADD_DEPARTMENT":
+            case "ADD_DEPARTMENT": // finished
                 addDepartments();
                 break;
             case "ADD_ROLE":
@@ -111,71 +112,57 @@ function viewEmployees() {
         console.table(employees);
     })
 }
-// TODO: Add a department option
+// Add a department option
 function addDepartments() {
-    db.createDepartment ()
-    .then (([rows]) => {
-           
-            console.log('\n');
-            console.table;
-        }
-        )
-    }
-    .then(() => loadMainPrompts());
-});
-}
-
-
-
-function loadDeptOptions() {
     prompt([
         {
-            type: 'list',
-            name: 'choice',
-            message: 'What department would you like to add?',
-            input: 'name', 'string', 
-                {
-                    name: "Quit",
-                    value: "QUIT"
-                }
-            ]
+            name: "name",
+            message: "What department do you want to create?",
         }
-    ]).then(res => {
-        let choice = res.choice;
-
-            default:
-                quit();
-
-        }
-    })
+    ])
+        .then(res => {
+            let name = res;
+            db.createDepartment(name)
+            .then(() => console.log(`${name} was created.`))
+            .then(() => loadMainPrompts());
+        })
 }
+
+// Add role
+
+
 
 // TODO: Add a role
 function addRole() {
+    db.findAllDepartments()
+        .then(([rows]) => {
+            let departments = rows
+        })
 
-}
-function loadRole() {
     prompt([
         {
-            type: 'list',
-            name: 'choice',
-            message: 'What department role you like to add?',
-            input: 'name', 'string', 
-                {
-                    name: "Quit",
-                    value: "QUIT"
-                }
-            ]
+            name: "name",
+            message: "What role do you want to create?",
+        },
+        {
+            name: "salary",
+            message: "What is the salary of this role?",
+        },
+        {
+            type: "list",
+            name: "department_id",
+            message: "What department does this role belong to?",
+            choices: deptOptions
         }
-    ]).then(res => {
-        let choice = res.choice;
+       
+        
 
-            default:
-                quit();
 
-        }
-    })
-}
+
+
+    ])}
+
+        
 // TODO: Add an employee
 function addEmployee() {
 
@@ -265,3 +252,25 @@ function quit() {
 
 
 
+function loadDeptOptions() {
+    prompt([
+        {
+            type: 'list',
+            name: 'choice',
+            message: 'What department would you like to add?',
+            input: 'name', 'string', 
+                {
+                    name: "Quit",
+                    value: "QUIT"
+                }
+            ]
+        }
+    ]).then(res => {
+        let choice = res.choice;
+
+            default:
+                quit();
+
+        }
+    })
+}

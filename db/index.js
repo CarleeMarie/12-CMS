@@ -76,6 +76,10 @@ createEmployee(role) {
   }
   
 
+  // create a new role
+  createRole(role) {
+    return this.connection.promise().query("INSERT INTO role SET ?", role);
+  }
 
   
 
