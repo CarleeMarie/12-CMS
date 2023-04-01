@@ -57,15 +57,15 @@ function loadMainPrompts() {
         let choice = res.choice;
         switch (choice) {
             case "VIEW_DEPARTMENTS":
-                viewDepartments(); // finished
+                viewDepartments(); 
                 break;
             case "VIEW_ROLES":
-                viewRoles(); // finished
+                viewRoles(); 
                 break;
-            case "VIEW_EMPLOYEES": // finished
+            case "VIEW_EMPLOYEES": 
                 viewEmployees();
                 break;
-            case "ADD_DEPARTMENT": // finished
+            case "ADD_DEPARTMENT": 
                 addDepartments();
                 break;
             case "ADD_ROLE":
@@ -189,23 +189,7 @@ function addEmployee() {
             .then(() => loadMainPrompts());
         })
 
-}
-// TODO: Do I need this??
-// function loadDeptOptions() {
-//     prompt([
-//         {
-//             type: 'list',
-//             name: 'choice',
-//             message: 'What department would you like to add?',
-//             input: 'name', 'string' 
-//                 // TODO: what do I put here?
-//             ])
-//             .then(res => {
-//                 let choice = res.choice;
-        
-//                     default:
-//                         quit();
-        
+}     
                
 
 // Update an employee role
@@ -218,11 +202,7 @@ function updateEmployeeRole() {
             name: `${first_name} ${last_name}`,
             value: id
         }));
-        // TODO: Do I need this here, too?
-        // const roleChoices = roles.map(({ id, title }) => ({
-        //     name: title,
-        //     value: id
-        // }));
+   
         prompt([
             {
                 type: 'list',
