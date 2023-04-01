@@ -126,17 +126,15 @@ function addDepartments() {
             .then(() => console.log(`${name} was created.`))
             .then(() => loadMainPrompts());
         })
-}
+    }
 
-// Add role
-
-
-
-// TODO: Add a role
+// Add a role    
 function addRole() {
     db.findAllDepartments()
         .then(([rows]) => {
-            let departments = rows
+            let departments = rows;
+            console.log('\n');
+            console.table(departments); 
         })
 
     prompt([
@@ -154,41 +152,61 @@ function addRole() {
             message: "What department does this role belong to?",
             choices: deptOptions
         }
-       
+    ])
+        .then(res => {
+            let name = res;
+            db.createRole(name)
+            .then(() => console.log(`${name} was created.`))
+            .then(() => loadMainPrompts());
+        })
+    }
+
         
-
-
-
-
-    ])}
-
-        
-// TODO: Add an employee
+// Add an employee
 function addEmployee() {
-
-}
-function loadDeptOptions() {
-    prompt([
+    prompt ([
         {
-            type: 'list',
-            name: 'choice',
-            message: 'What department would you like to add?',
-            input: 'name', 'string', 
-                {
-                    name: "Quit",
-                    value: "QUIT"
-                }
-            ]
+            name: "name",
+            message: "What is the first name of the new employee?",
+        },
+        {
+            name: "name",
+            message: "What is the last name of the new employee?",
+        },
+        {
+            name: "role",
+            message: "What role should be assigned to the employee?",
+        },
+        {
+            name: "manager",
+            message: "Who is the manager of the employee?",
         }
-    ]).then(res => {
-        let choice = res.choice;
+    ])
+        .then(res => {
+            let name = res;
+            db.createEmployee(name)
+            .then(() => console.log(`${name} has been added as an employee.`))
+            .then(() => loadMainPrompts());
+        })
 
-            default:
-                quit();
-
-        }
-    })
 }
+// TODO: Do I need this??
+// function loadDeptOptions() {
+//     prompt([
+//         {
+//             type: 'list',
+//             name: 'choice',
+//             message: 'What department would you like to add?',
+//             input: 'name', 'string' 
+//                 // TODO: what do I put here?
+//             ])
+//             .then(res => {
+//                 let choice = res.choice;
+        
+//                     default:
+//                         quit();
+        
+               
 
 // Update an employee role
 function updateEmployeeRole() {
@@ -200,10 +218,11 @@ function updateEmployeeRole() {
             name: `${first_name} ${last_name}`,
             value: id
         }));
-        const roleChoices = roles.map(({ id, title }) => ({
-            name: title,
-            value: id
-        }));
+        // TODO: Do I need this here, too?
+        // const roleChoices = roles.map(({ id, title }) => ({
+        //     name: title,
+        //     value: id
+        // }));
         prompt([
             {
                 type: 'list',
@@ -221,7 +240,7 @@ function updateEmployeeRole() {
                     name: title,
                     value: id
                 }));
-                prompt9[
+                prompt ([
                     {
                         type: "list",
                         name: "roleId",
@@ -234,43 +253,14 @@ function updateEmployeeRole() {
                 .then(() => loadMainPrompts());
             });
         })
-}
-        ])
         .then(res => db.updateEmployeeRole(res))
         .then(() => console.log("Updated employee's role."))
         .then(() => loadMainPrompts());
-    });
-})
-
+    })
 }
 
 // Exit the application
 function quit() {
     console.log("Goodbye!");
     process.exit();
-}
-
-
-
-function loadDeptOptions() {
-    prompt([
-        {
-            type: 'list',
-            name: 'choice',
-            message: 'What department would you like to add?',
-            input: 'name', 'string', 
-                {
-                    name: "Quit",
-                    value: "QUIT"
-                }
-            ]
-        }
-    ]).then(res => {
-        let choice = res.choice;
-
-            default:
-                quit();
-
-        }
-    })
 }
