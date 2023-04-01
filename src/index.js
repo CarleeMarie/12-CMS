@@ -1,3 +1,0 @@
-
-let  = require(schema.sql);
-
