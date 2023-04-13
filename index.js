@@ -226,7 +226,7 @@ function updateEmployeeRole() {
         choices: roleChoices
       }
     ])
-      .then(res => db.updateEmployeeRole(empoyeeId, res.roleId))
+      .then(res => db.updateEmployeeRole(employeeId, res.roleId))
       .then(() => console.log("Updated employee's role."))
       .then(() => loadMainPrompts());
       });
