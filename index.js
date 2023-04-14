@@ -1,18 +1,18 @@
-const { prompt } = require('inquirer');  
-const db = require('./db'); 
+const inquirer= require('inquirer');  
 const logo = require('asciiart-logo');
 require('console.table');
+const db = require('./db'); 
 
-init();
+
 
 function init() {
-  const displayLogo = logo({name: "Employee Management System"}).render();
-  console.log(displayLogo);
+const displayLogo = logo({name: "Employee Management System"}).render();
+console.log(displayLogo);
   loadMainPrompts();
 }
 
 function loadMainPrompts() {
-  prompt([
+  inquirer.prompt([
   {
     type: 'list',
     name: 'choice',
@@ -53,7 +53,6 @@ function loadMainPrompts() {
     ],
   }
 ]).then(res => {
-  console.log("hello");
   let choice = res.choice;
   switch (choice) {
   case "VIEW_DEPARTMENTS":
@@ -88,9 +87,9 @@ function loadMainPrompts() {
 function viewDepartments() {
   db.findAllDepartments()
     .then(([rows]) => {
-      let departments = rows;
+      let department = rows;
       console.log('\n');
-      console.table(departments);
+      console.table(department);
     })
 }
 
@@ -98,7 +97,7 @@ function viewDepartments() {
 function viewRoles() {
   db.findAllRoles()
     .then(([rows]) => {
-      let roles = rows;
+      let role = rows;
       console.log('\n');
       console.table; 
     })
@@ -108,9 +107,9 @@ function viewRoles() {
 function viewEmployees() {
   db.findAllEmployees()
     .then(([rows]) => {
-      let employees = rows;
+      let employee = rows;
       console.log('\n');
-      console.table(employees);
+      console.table(employee);
     })
 }
 
@@ -134,9 +133,9 @@ function addDepartments() {
 function addRole() {
   db.findAllDepartments()
     .then(([rows]) => {
-      let departments = rows;
+      let department = rows;
         console.log('\n');
-        console.table(departments); 
+        console.table(department); 
     })
   prompt([
     {
@@ -194,8 +193,8 @@ function addEmployee() {
 function updateEmployeeRole() {
   db.findAllEmployees()
   .then(([rows]) => {
-    let employees = rows;
-    const employeeChoices = employees.map(({ id, first_name, last_name }) =>
+    let employee = rows;
+    const employeeChoices = employee.map(({ id, first_name, last_name }) =>
       ({
         name: `${first_name} ${last_name}`,
         value: id
@@ -204,7 +203,7 @@ function updateEmployeeRole() {
   prompt([
       {
         type: 'list',
-        name: 'employeeId',
+        name: 'employee',
         message: "Which employee's role would you like to update?",
         choices: employeeChoices
       }
@@ -213,8 +212,8 @@ function updateEmployeeRole() {
     let employeeId = res.employeeId;
     db.findAllRoles()
       .then(([rows]) => {
-        let roles = rows;
-        const roleChoices = roles.map(({ id, title }) => ({
+        let role = rows;
+        const roleChoices = role.map(({ id, title }) => ({
           name: title,
           value: id
       }));
@@ -236,6 +235,9 @@ function updateEmployeeRole() {
       .then(() => loadMainPrompts());
   })
 }
+
+init();
+
 
 // Exit the application
 function quit() {

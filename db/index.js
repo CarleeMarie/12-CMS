@@ -1,8 +1,21 @@
-const connection = require('../config/connection.js');
+const connection = require('../config/connection');
 
 class DB {
   constructor(connection) {
     this.connection = connection;
+  }
+
+  findAllDepartments(department) {
+    return this.connection.promise().query(
+      "SELECT department.id, department.dept_name FROM department",
+      [department]
+    );
+  }
+
+  findAllRoles() {
+    return this.connection.promise().query(
+      "SELECT role.id, role.title, role.salary, role.dept_id FROM role LEFT JOIN department ON role.dept_id = department.id",        
+    );
   }
 
   findAllEmployees() {
@@ -11,10 +24,10 @@ class DB {
     );
   }
 
-  findAllManagers(employeeId) {
+  findAllManagers(employee) {
     return this.connection.promise().query(
       "SELECT id, first_nam, last_name FROM employee WHERE id !=?",
-      employeeId 
+      employee 
     );
   }
 
@@ -26,44 +39,35 @@ class DB {
     
     
   // remove an employee with given id
-  removeEmployee(employeeId) {
+  removeEmployee(employee) {
     return this.connection.promise().query(
       "DELETE FROM employee WHERE id = ?",
-      employeeId
+      employee
     );
   }
 
-  updateEmployeeRole(employeeId, roleId) {
+  updateEmployeeRole(employee, roleId) {
     return this.connection.promise().query(
       "UPDATE employee SET role_id = ? WHERE id = ?",
-      [roleId, employeeId]
+      [roleId, employee]
     );
   }
 
-  updateEmployeeManager(employeeId, managerId) {
+  updateEmployeeManager(employee, managerId) {
     return this.connection.promise().query(
       "UPDATE employee SET manager_id = ? WHERE id = ?",
-      [managerId, employeeId]
+      [managerId, employee]
     );
   }
 
-  findAllRoles() {
-    return this.connection.promise().query(
-      "SELECT role.id, role.title, role.salary, role.dept_id FROM role LEFT JOIN department ON role.dept_id = department.id",        
-    );
-  }
+
 
   // create a new role
   createEmployee(role) {
     return this.connection.promise().query("INSERT INTO role SET ?", role);
   }
 
-  findAllDepartments() {
-    return this.connection.promise().query(
-      "SELECT id, first_name, last_name FROM employee WHERE id !=?",
-      employeeId
-    );
-  }
+  
 
   // create a new department
   createDepartment(department) {
