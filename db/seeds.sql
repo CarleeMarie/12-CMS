@@ -1,7 +1,7 @@
 use company_db;
 
 INSERT INTO department
-    (dept_name)
+    (name)
 VALUES
     ('General Management'),
     ('Team Leaders'),

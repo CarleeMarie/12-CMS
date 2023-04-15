@@ -5,7 +5,7 @@ USE company_db;
 
 CREATE TABLE department (
     id INT AUTO_INCREMENT,
-    dept_name VARCHAR(30) UNIQUE NOT NULL,
+    name VARCHAR(30) UNIQUE NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -32,5 +32,4 @@ CREATE TABLE employee (
     ON DELETE SET NULL,
     FOREIGN KEY (role_id)
     REFERENCES role(id)
-    ON DELETE SET NULL
 );

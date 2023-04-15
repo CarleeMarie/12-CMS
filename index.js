@@ -90,6 +90,7 @@ function viewDepartments() {
       let department = rows;
       console.log('\n');
       console.table(department);
+      loadMainPrompts();
     })
 }
 
@@ -99,7 +100,8 @@ function viewRoles() {
     .then(([rows]) => {
       let role = rows;
       console.log('\n');
-      console.table; 
+      console.table(role);
+      loadMainPrompts(); 
     })
 }
 
@@ -110,12 +112,13 @@ function viewEmployees() {
       let employee = rows;
       console.log('\n');
       console.table(employee);
+      loadMainPrompts();
     })
 }
 
 // Add a department option
 function addDepartments() {
-  prompt([
+  inquirer.prompt([
     {
       name: "name",
       message: "What department do you want to create?",
@@ -137,7 +140,7 @@ function addRole() {
         console.log('\n');
         console.table(department); 
     })
-  prompt([
+  inquirer.prompt([
     {
       name: "name",
       message: "What role do you want to create?",
@@ -163,7 +166,7 @@ function addRole() {
        
 // Add an employee
 function addEmployee() {
-  prompt ([
+  inquirer.prompt ([
     {
       name: "name",
       message: "What is the first name of the new employee?",
@@ -200,7 +203,7 @@ function updateEmployeeRole() {
         value: id
       }));
    
-  prompt([
+  inquirer.prompt([
       {
         type: 'list',
         name: 'employee',
@@ -217,7 +220,7 @@ function updateEmployeeRole() {
           name: title,
           value: id
       }));
-    prompt ([
+    inquirer.prompt ([
       {
         type: "list",
         name: "roleId",
