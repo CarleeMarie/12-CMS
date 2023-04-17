@@ -96,6 +96,7 @@ function viewDepartments() {
 
 // View all roles option
 function viewRoles() {
+  console.log("here");
   db.findAllRoles()
     .then(([rows]) => {
       let role = rows;
@@ -134,64 +135,108 @@ function addDepartments() {
 
 // Add a role    
 function addRole() {
-  db.findAllDepartments()
-    .then(([rows]) => {
-      let department = rows;
-        console.log('\n');
-        console.table(department); 
-    })
-  inquirer.prompt([
-    {
-      name: "name",
-      message: "What role do you want to create?",
-    },
-    {
-      name: "salary",
-      message: "What is the salary of this role?",
-    },
-    {
-      type: "list",
-      name: "department_id",
-      message: "What department does this role belong to?",
-      choices: deptOptions
-    }
-  ])
-  .then(res => {
-    let name = res;
-    db.createRole(name)
-      .then(() => console.log(`${name} was created.`))
-      .then(() => loadMainPrompts());
-    })
+  db.findAllDepartments().then(([rows]) => {
+    let department = rows;
+    console.log("\n");
+    console.table(department);
+    let listDepartment = department.map((dept) => {
+      return {
+        name: dept.name,
+        value: dept.id,
+      };
+    });
+    console.log(listDepartment);
+
+    inquirer
+      .prompt([
+        {
+          name: "title",
+          message: "What role do you want to create?",
+        },
+        {
+          name: "salary",
+          message: "What is the salary of this role?",
+        },
+        {
+          type: "list",
+          name: "dept_id",
+          message: "What department does this role belong to?",
+          choices: listDepartment,
+        },
+      ])
+      .then((res) => {
+        let name = res;
+        console.log(name);
+        db.createRole(name)
+          .then(() => console.log(`${name} was created.`))
+          .then(() => loadMainPrompts());
+      });
+  });
 }
        
 // Add an employee
 function addEmployee() {
+  db.findAllRoles().then(([rows]) => {
+    let role = rows;
+    console.log("\n");
+    console.table(role);
+    let listRole = role.map((role) => {
+      return {
+        name: role.title,
+        value: role.id,
+      };
+    });
+  
+  
+  
+    // function assignManager() {
+    // db.findAllManagers().then(([rows]) => {
+    //   let manager_id = rows;
+    //   console.log("\n");
+    //   console.table(manager_id);
+    //   let listManager = role.map((employee.roleId) => {
+    //     return {
+    //       name: department.id,
+    //       value: department.id,
+    //     };
+    //   });
+    // }
+    // console.log(listRole);
+  
   inquirer.prompt ([
     {
-      name: "name",
+      name: "first_name",
       message: "What is the first name of the new employee?",
     },
     {
-      name: "name",
+      name: "last_name",
       message: "What is the last name of the new employee?",
     },
     {
+      type: "list",
       name: "role",
       message: "What role should be assigned to the employee?",
+      choices: listRole,
     },
     {
+      type: "list",
       name: "manager",
       message: "Who is the manager of the employee?",
-    }
+      choices: listManager,
+    },
   ])
   .then(res => {
     let name = res;
-      db.createEmployee(name)
+      console.log(name);
+      db.addEmployee(name)
       .then(() => console.log(`${name} has been added as an employee.`))
       .then(() => loadMainPrompts());
-    })
-}     
-               
+    });
+});
+}
+  
+
+
 // Update an employee role
 function updateEmployeeRole() {
   db.findAllEmployees()
@@ -238,6 +283,7 @@ function updateEmployeeRole() {
       .then(() => loadMainPrompts());
   })
 }
+
 
 init();
 

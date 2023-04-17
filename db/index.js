@@ -12,10 +12,9 @@ class DB {
     );
   }
 
-  findAllRoles(role) {
+  findAllRoles() {
     return this.connection.promise().query(
-      "SELECT role.id, role.title, role.salary, role.dept_id FROM role LEFT JOIN department ON role.dept_id = department.id WHERE role.title !=?", 
-      [role]       
+      "SELECT role.id, role.title, role.salary, role.dept_id FROM role LEFT JOIN department ON role.dept_id = department.id"     
     );
   }
 
@@ -65,9 +64,9 @@ class DB {
 
 
 
-  // create a new role
-  createEmployee(role) {
-    return this.connection.promise().query("INSERT INTO role SET ?", role);
+  // create a new employee
+  createEmployee(employee) {
+    return this.connection.promise().query("INSERT INTO employee SET ?", employee);
   }
 
   
@@ -79,7 +78,8 @@ class DB {
     
   // create a new role
   createRole(role) {
-    return this.connection.promise().query("INSERT INTO role SET ?", role);
+    return this.connection.promise().query("INSERT INTO role SET ?",
+    role);
   }
 }
 
