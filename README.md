@@ -14,7 +14,14 @@
   Boot Camp Homework 12
 
   ## Installation 
-  no
+ Yes
+ run:
+ npm install
+ login in to mySql:
+      source db/schema.sql;
+      source db/seeds.sql;
+      exit
+  node index.js (to start server)
   
   ## Tests
   no
@@ -24,12 +31,6 @@
   
   ## License
   MIT
-   
-  ## Badges
-  
-  ![badmath](https://img.shields.io/badge/JavaScript-100%25-yellowgreen)
-  
-  Check out the badges hosted by [shields.io](https://shields.io/).
   
   ## How to Contribute
   
